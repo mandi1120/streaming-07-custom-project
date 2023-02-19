@@ -4,7 +4,7 @@
 
 ## Assignment:
 - **Project Description**  
-    - For my streaming analytics project, I created a program to stream data from reddit.com, an app that I visit frequently. The two communities I chose to use as the data source, r/dataanalysis and r/todayilearned, are pages that I often find useful or interesting information, and their posts are mostly submitted in text format.
+    - For my streaming analytics project, I created a program to stream data from reddit.com, an app that I visit frequently. The two communities I chose to use as the data source, r/dataanalysis and r/todayilearned, are pages that I often find useful or interesting information, and have posts that are mostly submitted in text format.
 - **Original Data Sources**  
     - [r/dataanalysis](https://www.reddit.com/r/dataanalysis/): 
         - The Data Analysis page is "a subreddit for those doing data analysis". Users post questions and tips related to the field of analytics.    
