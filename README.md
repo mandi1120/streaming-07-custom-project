@@ -3,14 +3,14 @@
 - Date: 2/18/23
 
 ## Assignment:
-- Project Description
-    - For my streaming analytics project, I created a program to stream data from reddit.com, an app that I visit frequently. The two communities I chose to use as the data source, r/dataanalysis and r/todayilearned, are pages that I find useful or interesting information and are mostly submitted in text format.
-- Original Data Sources
+- **Project Description**  
+    - For my streaming analytics project, I created a program to stream data from reddit.com, an app that I visit frequently. The two communities I chose to use as the data source, r/dataanalysis and r/todayilearned, are pages that I often find useful or interesting information, and their posts are mostly submitted in text format.
+- **Original Data Sources**  
     - [r/dataanalysis](https://www.reddit.com/r/dataanalysis/): 
         - The Data Analysis page is "a subreddit for those doing data analysis". Users post questions and tips related to the field of analytics.    
     - [r/todayilearned](https://www.reddit.com/r/todayilearned/):
         - Today I Learned (TIL) is a subreddit where users post interesting facts. The posts are typcically random pieces of information you didn't know you needed, but may come in handy for your next trivia night. 
-- Program Overview  
+- **Program Overview**    
     - Reddit_producer.py
         - This program gets posts from reddit using the API, then streams the post as a message to a corresponding queue on the RabbitMQ server.  
         - The following subreddit pages are set as the source:
@@ -24,7 +24,7 @@
         - Alerts
             - r/dataanalysis: Alerts are generated when less than one hour or more than four hours have elapsed since the previous post.           
             - r/todayilearned: Alerts are generated when less than one hour or more than five hours have elapsed since the post was created (from the current time).       
-- Output Files:
+- **Output Files**  
     - [r/dataanalysis output](/output_dataanalysis.txt)
     - [r/todayilearned output](/output_todayilearned.txt)
 
