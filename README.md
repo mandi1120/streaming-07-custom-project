@@ -9,7 +9,7 @@
     - [r/dataanalysis](https://www.reddit.com/r/dataanalysis/): 
         - The Data Analysis page is "a subreddit for those doing data analysis". Users post questions and tips related to the field of analytics.    
     - [r/todayilearned](https://www.reddit.com/r/todayilearned/):
-        - Today I Learned (TIL) is a subreddit where users post interesting facts. The posts are typcically random pieces of information you didn't know you needed, but may come in handy for your next trivia night. 
+        - Today I Learned (TIL) is a subreddit where users post interesting facts. The posts are typically random pieces of information you didn't know you needed, but may come in handy for your next trivia night. 
 - **Program Overview**    
     - Reddit_producer.py
         - This program gets posts from reddit using the API, then streams the post as a message to a corresponding queue on the RabbitMQ server.  
@@ -29,7 +29,7 @@
     - [r/todayilearned output](/output_todayilearned.txt)
 
 ## Prerequisites:
-- Requres a reddit.com account and API application
+- Requires a reddit.com account and API application
     - Account: username, password
     - Application: personal use script, secret tokens, app name
         -  Setup instructions
