@@ -1,6 +1,6 @@
 """
     Amanda Hanway - Streaming Data, Module 7
-    2/4/23
+    Date: 2/4/23
 
     This program listens for messages from two queues 
     on the RabbitMQ server continuously. 
@@ -28,7 +28,7 @@ host = "localhost"
 queue_name_1 = "dataanalysis_queue"
 queue_name_2 = "todayilearned_queue"
 
-# Create empty deques to store that last n messages
+# Create empty deques to store that last 2 messages
 queue_1_deque = deque(maxlen=2)
 queue_2_deque = deque(maxlen=2)
 
@@ -36,18 +36,13 @@ queue_2_deque = deque(maxlen=2)
 ######## define functions ########
 def callback_1(ch, method, properties, body):
     """ 
-    Define behavior on getting a message from r\dataanalysis
+    Define behavior on getting a message from r/dataanalysis/new
     """
     # decode the binary message body to a string
-    print(f"\n [x] Received:  {body.decode()}")
+    print(f"\n[x] Received:  {body.decode()}")
 
-    # clean up the text
-    # ^:ignore, \w:word characters including alphanumeric characters and underscore 
-    #clean_string1 = re.sub('[^\w -:/[]!."'']', '', body.decode('unicode-escape'))
-    #clean_string1 = re.sub('[^ ()[]{} -:!."'']', '', body.decode('unicode-escape'))
-    clean_string1 = re.sub(re.compile('[^a-zA-Z0-9\\\/\.\-\!\?\&\ \_"'',:;()&]|_'), '', body.decode('unicode-escape'))
-    #print(clean_string1)
-
+    # clean up the text (^=ignore) 
+    clean_string1 = re.sub(re.compile('[^a-zA-Z0-9\\\/\.\-\!?& _"'',:;()<>[]+#$%\\*]|_'), '', body.decode())
     # remove new lines 
     clean_string2 = clean_string1.replace("\n", " ")
     # split the message into columns
@@ -59,17 +54,19 @@ def callback_1(ch, method, properties, body):
     text_str = re.findall(r'text-start/(.+?)/text-end', clean_string2)
 
     # add the message to a deque and find time since previous post
+    # note: posts are in descending order
     queue_1_deque.append(timestamp[0])
     time_current = datetime.strptime(queue_1_deque[0], '%Y-%m-%d, %H:%M:%S')
     time_compare = datetime.strptime(queue_1_deque[-1], '%Y-%m-%d, %H:%M:%S')    
     time_difference = 0
     if int(format(time_current, '%Y')) > 2000 :
-        time_difference = time_current - time_compare
+        time_difference = time_current - time_compare  
     hours = int(time_difference.total_seconds() // 3600)
+    remaining_secs = time_difference.total_seconds() - (hours * 3600)
+    mins = remaining_secs // 60
 
-    fullstring = subreddit + flair + timestamp + [str(hours) + " hours since last post"] + title_str + text_str 
+    fullstring = subreddit + flair + timestamp + [str(int(hours)) + " hours " + str(int(mins)) + " since earlier post"] + title_str + text_str 
     listToStr = ', '.join([str(w) for w in fullstring])   
-    # print(listToStr)
  
     # write message to output file 
     with open("output_dataanalysis.txt", "a", encoding="utf-8", newline='',) as output_file:
@@ -78,24 +75,19 @@ def callback_1(ch, method, properties, body):
     
     # generate alert
     if hours < 1:
-        print(f" >>>>>>>> ALERT: < 1 Hour Since Last Post")
+        print(f" >>>>>>>> ALERT: < 1 Hour Between Posts ({str(int(hours))} hr {str(int(mins))} min.)")   
     elif hours > 4:
-        print(f" >>>>>>>> ALERT: > 4 Hours Since Last Post")       
+        print(f" >>>>>>>> ALERT: > 4 Hours Between Posts ({str(int(hours))} hr {str(int(mins))} min.)")   
 
 def callback_2(ch, method, properties, body):
     """ 
-    Define behavior on getting a message from r\todayilearned
+    Define behavior on getting a message from r/todayilearned/top/?t=day
     """
     # decode the binary message body to a string
-    print(f"\n [x] Received:  {body.decode()}")
+    print(f"\n[x] Received:  {body.decode()}")
 
-    # clean up the text
-    # ^:ignore, \w:any word characters (a to Z, 0-9, and underscore)
-    #clean_string1 = re.sub('[^\w -:/[]!."'']', '', body.decode('unicode-escape'))
-    #clean_string1 = re.sub('[^ ()[]{} -:!."'']', '', body.decode('unicode-escape'))
-    clean_string1 = re.sub(re.compile('[^a-zA-Z0-9\\\/\.\-\!\?\&\ \_"'',:;()&]|_'), '', body.decode('unicode-escape'))
-    #print(clean_string1)
-
+    # clean up the text(^=ignore) 
+    clean_string1 = re.sub(re.compile('[^a-zA-Z0-9\\\/\.\-\!?& _"'',:;()<>[]+#$%\\*]|_'), '', body.decode())
     # remove new lines 
     clean_string2 = clean_string1.replace("\n", " ")
     # split the message into columns
@@ -103,7 +95,8 @@ def callback_2(ch, method, properties, body):
     subreddit = re.findall(r'sub-start/(.+?)/sub-end', clean_string2)
     title_str = re.findall(r'title-start/(.+?)/title-end', clean_string2)
 
-    # add the message to a deque and find how long since it was posted
+    # add the message to a deque and find how long since it was posted from now
+    # note: posts are not in chronological order
     queue_2_deque.append(timestamp[0])
     time_current = datetime.now()
     time_compare = datetime.strptime(queue_2_deque[-1], '%Y-%m-%d, %H:%M:%S')    
@@ -114,10 +107,9 @@ def callback_2(ch, method, properties, body):
 
     fullstring = subreddit + timestamp + ["Posted " + str(int(hours)) + " hours " + str(int(mins)) + " minutes ago"] + title_str 
     listToStr = ', '.join([str(w) for w in fullstring])  
-    # print(listToStr)
- 
-    # write message to output file 
-    with open("output_todayilearned.txt", "a", encoding="utf-8", newline='',) as output_file:
+
+    # write message to output file  
+    with open("output_todayilearned.txt", "a", newline='', encoding="utf-8") as output_file:
         writer_til = csv.writer(output_file)  
         writer_til.writerow([listToStr]) 
 

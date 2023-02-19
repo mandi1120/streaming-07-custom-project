@@ -1,8 +1,8 @@
 '''
     Amanda Hanway - Streaming Data, Module 7
-    2/4/23
+    Date: 2/4/23
 
-    This program gets posts from reddit.com using the reddit api 
+    This program gets posts from reddit.com using the reddit API 
     then streams the post as a message to two queues on the RabbitMQ server.
 
     Author: Amanda Hanway 
@@ -49,7 +49,7 @@ queue_name_2 = "todayilearned_queue"
 
 # set to turn on (true) or turn off (false) asking the 
 # user if they'd like to open the RabbitMQ Admin site 
-show_offer = False
+show_offer = True
 
 
 ######## define functions ########
