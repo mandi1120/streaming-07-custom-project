@@ -68,17 +68,17 @@ conda install -c conda-forge requests
 ## Screenshots:
 
 ### Producer Program Running in Terminal:
-![Program Running](/Producer_running.png)
+![Program Running](supporting_files/Producer_running.png)
 
 ### Consumer Program Running in Terminal:
-![Program Running](/Consumer_running.png)
+![Program Running](supporting_files/Consumer_running.png)
 
 ### Producer & Consumer Programs Running Concurrently:
-![Program Running](/Consumer+producer_running.png)
+![Program Running](supporting_files/Consumer+producer_running.png)
 
 ### RabbitMQ Management Console:
-![RabbitMQ Admin](/RabbitMQ-1.png)
-![RabbitMQ Admin](/RabbitMQ-2.png)
+![RabbitMQ Admin](supporting_files/RabbitMQ-1.png)
+![RabbitMQ Admin](supporting_files/RabbitMQ-2.png)
 
 
 

@@ -65,7 +65,7 @@ def callback_1(ch, method, properties, body):
     remaining_secs = time_difference.total_seconds() - (hours * 3600)
     mins = remaining_secs // 60
 
-    fullstring = subreddit + flair + timestamp + [str(int(hours)) + " hours " + str(int(mins)) + " since earlier post"] + title_str + text_str 
+    fullstring = subreddit + flair + timestamp + [str(int(hours)) + " hr. " + str(int(mins)) + " min. since earlier post"] + title_str + text_str 
     listToStr = ', '.join([str(w) for w in fullstring])   
  
     # write message to output file 
@@ -75,9 +75,9 @@ def callback_1(ch, method, properties, body):
     
     # generate alert
     if hours < 1:
-        print(f" >>>>>>>> ALERT: < 1 Hour Between Posts ({str(int(hours))} hr {str(int(mins))} min.)")   
+        print(f" >>>>>>>> ALERT: < 1 Hour Between Posts ({str(int(hours))} hr. {str(int(mins))} min.)")   
     elif hours > 4:
-        print(f" >>>>>>>> ALERT: > 4 Hours Between Posts ({str(int(hours))} hr {str(int(mins))} min.)")   
+        print(f" >>>>>>>> ALERT: > 4 Hours Between Posts ({str(int(hours))} hr. {str(int(mins))} min.)")   
 
 def callback_2(ch, method, properties, body):
     """ 
@@ -105,7 +105,7 @@ def callback_2(ch, method, properties, body):
     remaining_secs = time_difference.total_seconds() - (hours * 3600)
     mins = remaining_secs // 60
 
-    fullstring = subreddit + timestamp + ["Posted " + str(int(hours)) + " hours " + str(int(mins)) + " minutes ago"] + title_str 
+    fullstring = subreddit + timestamp + ["Posted " + str(int(hours)) + " hr. " + str(int(mins)) + " min. ago"] + title_str 
     listToStr = ', '.join([str(w) for w in fullstring])  
 
     # write message to output file  
@@ -115,9 +115,9 @@ def callback_2(ch, method, properties, body):
 
     # generate alert
     if hours < 1:
-        print(f" >>>>>>>> ALERT: Posted < 1 Hour Ago ({str(int(hours))} hr {str(int(mins))} min.)")    
+        print(f" >>>>>>>> ALERT: Posted < 1 Hour Ago ({str(int(hours))} hr. {str(int(mins))} min.)")    
     elif hours > 5:
-        print(f" >>>>>>>> ALERT: Posted > 5 Hours Ago ({str(int(hours))} hr {str(int(mins))} min.)")       
+        print(f" >>>>>>>> ALERT: Posted > 5 Hours Ago ({str(int(hours))} hr. {str(int(mins))} min.)")       
 
 # main function to run the program
 def main(hn: str = host, qn1: str = queue_name_1, qn2: str = queue_name_2):
@@ -200,7 +200,6 @@ def main(hn: str = host, qn1: str = queue_name_1, qn2: str = queue_name_2):
 # If this is the program being run, then execute the code below
 if __name__ == "__main__":
 
-    #main(host, queue_name_1, '')
     main()
 
 
