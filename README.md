@@ -2,7 +2,8 @@
 - Custom Project: Streaming data using the Reddit.com API and RabbitMQ server
 - Date: 2/18/23
 
-## Assignment:
+## Overview:  
+This program was created as a final project for a master's course at NWMSU, Streaming Data.
 - **Project Description**  
     - For my streaming analytics project, I created a program to stream data from reddit.com, an app that I visit frequently. The two communities I chose to use as the data source, r/dataanalysis and r/todayilearned, are pages that I often find useful or interesting information, and have posts that are mostly submitted in text format.
 - **Original Data Sources**  
@@ -23,10 +24,10 @@
             - The program attempts to clean the data by removing special characters, line breaks, and splitting the message into corresponding columns. The result is written to the output file.
         - Alerts
             - r/dataanalysis: Alerts are generated when less than one hour or more than four hours have elapsed since the previous post.           
-            - r/todayilearned: Alerts are generated when less than one hour or more than five hours have elapsed since the post was created (from the current time).       
+            - r/todayilearned: Alerts are generated when less than one hour or more than five hours have elapsed since the post was created (from the current time).   
 - **Output Files**  
-    - [r/dataanalysis output](/output_dataanalysis.txt)
-    - [r/todayilearned output](/output_todayilearned.txt)
+    - r/dataanalysis: [view output](/output_dataanalysis.txt)
+    - r/todayilearned: [view output](/output_todayilearned.txt)
 
 ## Prerequisites:
 - Requires a reddit.com account and API application
