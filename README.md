@@ -3,31 +3,29 @@
 - Date: 2/18/23
 
 ## Overview:  
-This program was created as a final project for a master's course at NWMSU, Streaming Data.
-- **Project Description**  
-    - For my streaming analytics project, I created a program to stream data from reddit.com, an app that I visit frequently. The two communities I chose to use as the data source, r/dataanalysis and r/todayilearned, are pages that I often find useful or interesting information, and have posts that are mostly submitted in text format.
-- **Original Data Sources**  
-    - [r/dataanalysis](https://www.reddit.com/r/dataanalysis/): 
-        - The Data Analysis page is "a subreddit for those doing data analysis". Users post questions and tips related to the field of analytics.    
-    - [r/todayilearned](https://www.reddit.com/r/todayilearned/):
-        - Today I Learned (TIL) is a subreddit where users post interesting facts. The posts are typically random pieces of information you didn't know you needed, but may come in handy for your next trivia night. 
-- **Program Overview**    
-    - Reddit_producer.py
-        - This program gets posts from reddit using the API, then streams the post as a message to a corresponding queue on the RabbitMQ server.  
-        - The following subreddit pages are set as the source:
-            - r/dataanalysis, new posts: https://www.reddit.com/r/dataanalysis/new/
-            - r/todayilearned, top posts: https://www.reddit.com/r/todayilearned/top/?t=day
-        - The program creates two queues - one queue is used uniquely for each subreddit page.
-    - Reddit_consumer.py
-        - This program listens for messages from two queues on the RabbitMQ server, continuously. It performs transformations on messages when received, and writes the cleaned message to an output file. An alert is generated when a set amount of time has passed between posts.   
-        - Transformations
-            - The program attempts to clean the data by removing special characters, line breaks, and splitting the message into corresponding columns. The result is written to the output file.
-        - Alerts
-            - r/dataanalysis: Alerts are generated when less than one hour or more than four hours have elapsed since the previous post.           
-            - r/todayilearned: Alerts are generated when less than one hour or more than five hours have elapsed since the post was created (from the current time).   
-- **Output Files**  
-    - r/dataanalysis: [view output](/output_dataanalysis.txt)
-    - r/todayilearned: [view output](/output_todayilearned.txt)
+This program was created as a final project for a master's course at NWMSU, Streaming Data.  
+### Project Description   
+- For my streaming analytics project, I created a program to stream data from reddit.com, an app that I visit frequently. The two communities I chose to use as the data source, r/dataanalysis and r/todayilearned, are pages that I often find useful or interesting information, and have posts that are mostly submitted in text format.
+### Original Data Sources  
+- [r/dataanalysis](https://www.reddit.com/r/dataanalysis/): The Data Analysis page is "a subreddit for those doing data analysis". Users post questions and tips related to the field of analytics.    
+- [r/todayilearned](https://www.reddit.com/r/todayilearned/): Today I Learned (TIL) is a subreddit where users post interesting facts. The posts are typically random pieces of information you didn't know you needed, but may come in handy for your next trivia night. 
+### Program Overview     
+- Reddit_producer.py
+    - This program gets posts from reddit using the API, then streams the post as a message to a corresponding queue on the RabbitMQ server.  
+    - The following subreddit pages are set as the source:
+        - r/dataanalysis, new posts: https://www.reddit.com/r/dataanalysis/new/
+        - r/todayilearned, top posts: https://www.reddit.com/r/todayilearned/top/?t=day
+    - The program creates two queues - one queue is used uniquely for each subreddit page.
+- Reddit_consumer.py
+    - This program listens for messages from two queues on the RabbitMQ server, continuously. It performs transformations on messages when received, and writes the cleaned message to an output file. An alert is generated when a set amount of time has passed between posts.   
+    - Transformations
+        - The program attempts to clean the data by removing special characters, line breaks, and splitting the message into corresponding columns. The result is written to the output file.
+    - Alerts
+        - r/dataanalysis: Alerts are generated when less than one hour or more than four hours have elapsed since the previous post.           
+        - r/todayilearned: Alerts are generated when less than one hour or more than five hours have elapsed since the post was created (from the current time).   
+### Output Files    
+- r/dataanalysis: [view output](/output_dataanalysis.txt)
+- r/todayilearned: [view output](/output_todayilearned.txt)
 
 ## Prerequisites:
 - Requires a reddit.com account and API application
